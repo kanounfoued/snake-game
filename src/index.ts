@@ -1,6 +1,9 @@
 const Game = require("./Game/index.ts");
 
+const rootDiv = document.getElementById("root");
 const game = new Game();
+
+rootDiv.append(game.render());
 
 // console.log(game.snack.moveTail(game.snack.head.getPosition()));
 
