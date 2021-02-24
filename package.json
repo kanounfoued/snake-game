@@ -9,6 +9,7 @@
     "start": "clear && webpack --mode development"
   },
   "devDependencies": {
+    "babel-plugin-add-import-extension": "^1.5.0",
     "ts-loader": "^8.0.17",
     "typescript": "^4.2.2",
     "webpack": "^5.24.1",
