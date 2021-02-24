@@ -1,0 +1,27 @@
+const PositionCoordinat = require("../PositionCoordinat/index.ts");
+
+module.exports = class Rock {
+  private position: typeof PositionCoordinat;
+
+  constructor(pos: typeof PositionCoordinat) {
+    this.position = pos;
+  }
+
+  getPosition(): typeof PositionCoordinat {
+    return this.position;
+  }
+
+  setPosition(position: typeof PositionCoordinat): void {
+    if (!position) {
+      this.position = new PositionCoordinat();
+      return;
+    }
+    this.position = position;
+  }
+
+  setCoordinatesPosition(x: number = 0, y: number = 0): void {
+    this.position = new PositionCoordinat(x, y);
+  }
+};
+
+export {};
