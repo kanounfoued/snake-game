@@ -1,9 +1,16 @@
 const Rock = require("../Rock/index.ts");
 const PositionCoordinat = require("../PositionCoordinat/index.ts");
 import MoveToDirection from "../Interface/MoveToDirection";
-import { Direction } from "../Enum/Direction";
+import { Direction } from "../Enum/Direction/index.ts";
+import { UI } from "../Interface/UI";
 
-module.exports = class SnackHead extends Rock implements MoveToDirection {
+const SnackHeadUI = (): HTMLElement => {
+  const SnackHeadDiv = document.createElement("div");
+
+  return SnackHeadDiv;
+};
+
+module.exports = class SnackHead extends Rock implements MoveToDirection, UI {
   private direction: Direction;
 
   constructor(position: typeof PositionCoordinat) {
@@ -33,6 +40,10 @@ module.exports = class SnackHead extends Rock implements MoveToDirection {
   moveDown(): void {
     const y = this.position.getY();
     this.position.setY(y + 1);
+  }
+
+  render(): HTMLElement | HTMLElement[] | null {
+    return SnackHeadUI();
   }
 };
 

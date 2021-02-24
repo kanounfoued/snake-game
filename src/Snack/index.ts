@@ -3,8 +3,31 @@ const SnackHead = require("../SnackHead/index.ts");
 const PositionCoordinat = require("../PositionCoordinat/index.ts");
 const SnackBodyRock = require("../SnackBodyRock/index.ts");
 import { Direction } from "../Enum/Direction";
+import { UI } from "../Interface/UI";
 
-module.exports = class Snack {
+const SnackUI = (
+  head: typeof SnackHead,
+  tail: typeof Rock[]
+): HTMLElement[] => {
+  const SnackHeadDiv: HTMLElement = document.createElement("div");
+
+  const list: HTMLElement[] = [];
+  SnackHeadDiv.setAttribute("class", "snack-head");
+  SnackHeadDiv.style.left = head.getPosition().getX();
+  SnackHeadDiv.style.top = head.getPosition().getY();
+  list.push(SnackHeadDiv);
+
+  tail.forEach((rock: typeof Rock) => {
+    const rockDiv = document.createElement("div");
+    rockDiv.style.left = rock.getPosition().getX();
+    rockDiv.style.top = rock.getPosition().getY();
+    list.push(rockDiv);
+  });
+
+  return list;
+};
+
+module.exports = class Snack implements UI {
   public head: typeof SnackHead;
   private tail: typeof Rock[];
 
@@ -54,8 +77,8 @@ module.exports = class Snack {
     console.log(this.tail);
   }
 
-  render(): HTMLElement | null {
-    return null;
+  render(): HTMLElement | HTMLElement[] | null {
+    return SnackUI(this.head, this.tail);
   }
 };
 
