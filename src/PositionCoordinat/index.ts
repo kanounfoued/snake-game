@@ -1,4 +1,4 @@
-module.exports = class Position {
+module.exports = class PositionCoordinat {
   private x: number;
   private y: number;
 
@@ -23,3 +23,5 @@ module.exports = class Position {
     this.y = y;
   }
 };
+
+export {};
