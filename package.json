@@ -1,7 +1,7 @@
 {
   "name": "snake-game",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "https://github.com/kanounfoued/snake-game.git",
   "author": "kanounfoued <fouad.kanoun@legal-doctrine.com>",
   "license": "MIT",
