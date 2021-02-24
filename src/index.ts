@@ -1,3 +1,3 @@
-let array: number[] = [1, 2, 4];
+const Position = require("./Position/Position.ts");
 
-console.log(array);
+console.log(new Position(2));
