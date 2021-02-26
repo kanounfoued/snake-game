@@ -5,7 +5,7 @@ import { UI } from "../Interface/UI";
 const SnackBodyRockUI = (x: number, y: number, index: number): HTMLElement => {
   const SnackBodyDiv = document.createElement("div");
   SnackBodyDiv.setAttribute("class", "rock snack-body-rock");
-  SnackBodyDiv.style.left = x - 11 * index + "px";
+  SnackBodyDiv.style.left = x + "px";
   SnackBodyDiv.style.top = y + "px";
   return SnackBodyDiv;
 };
