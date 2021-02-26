@@ -3,8 +3,19 @@ const Snack = require("../Snack/index.ts");
 import { UI } from "../Interface/UI";
 
 const GameUI = (field: HTMLElement, snack: HTMLElement[]): HTMLElement => {
-  const GameDiv = document.createElement("div");
-  GameDiv.setAttribute("class", "game-container");
+  let GameDiv: HTMLElement = document.getElementById("game-container");
+  if (!GameDiv) {
+    GameDiv = document.createElement("div");
+    GameDiv.setAttribute("id", "game-container");
+    GameDiv.setAttribute("class", "game-container");
+  }
+
+  if (document.getElementById("game-container")) {
+    const fieldContainer: HTMLElement = document.getElementById(
+      "field-container"
+    );
+    fieldContainer.remove();
+  }
 
   snack.forEach((rock: HTMLElement) => {
     field.append(rock);

@@ -3,6 +3,7 @@ import { UI } from "../Interface/UI";
 const FieldUI = (width: number, height: number): HTMLElement => {
   const FieldDiv = document.createElement("div");
   FieldDiv.setAttribute("class", "field-container");
+  FieldDiv.setAttribute("id", "field-container");
   FieldDiv.style.height = height + "px";
   FieldDiv.style.width = width + "px";
   return FieldDiv;
