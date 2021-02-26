@@ -4,9 +4,11 @@ import MoveToDirection from "../Interface/MoveToDirection";
 import { Direction } from "../Enum/Direction/index.ts";
 import { UI } from "../Interface/UI";
 
-const SnackHeadUI = (): HTMLElement => {
+const SnackHeadUI = (x: number, y: number): HTMLElement => {
   const SnackHeadDiv = document.createElement("div");
-
+  SnackHeadDiv.setAttribute("class", "snack-head");
+  SnackHeadDiv.style.left = x + "px";
+  SnackHeadDiv.style.top = y + "px";
   return SnackHeadDiv;
 };
 
@@ -43,7 +45,7 @@ module.exports = class SnackHead extends Rock implements MoveToDirection, UI {
   }
 
   render(): HTMLElement | HTMLElement[] | null {
-    return SnackHeadUI();
+    return SnackHeadUI(this.position.getX(), this.position.getY());
   }
 };
 

@@ -9,18 +9,12 @@ const SnackUI = (
   head: typeof SnackHead,
   tail: typeof Rock[]
 ): HTMLElement[] => {
-  const SnackHeadDiv: HTMLElement = document.createElement("div");
-
+  const SnackHeadDiv: HTMLElement = head.render();
   const list: HTMLElement[] = [];
-  SnackHeadDiv.setAttribute("class", "snack-head");
-  SnackHeadDiv.style.left = head.getPosition().getX();
-  SnackHeadDiv.style.top = head.getPosition().getY();
   list.push(SnackHeadDiv);
 
   tail.forEach((rock: typeof Rock) => {
-    const rockDiv = document.createElement("div");
-    rockDiv.style.left = rock.getPosition().getX();
-    rockDiv.style.top = rock.getPosition().getY();
+    const rockDiv: HTMLElement = rock.render();
     list.push(rockDiv);
   });
 
@@ -38,13 +32,15 @@ module.exports = class Snack implements UI {
         new PositionCoordinat(
           this.head.getPosition().getX() - 1,
           this.head.getPosition().getY()
-        )
+        ),
+        1
       ),
       new SnackBodyRock(
         new PositionCoordinat(
           this.head.getPosition().getX() - 2,
           this.head.getPosition().getY()
-        )
+        ),
+        2
       ),
     ];
   }
@@ -64,17 +60,18 @@ module.exports = class Snack implements UI {
     for (let i = lastPosition; i > 0; i--) {
       const position = this.tail[i - 1].getPosition();
       const newRock: typeof Rock = new SnackBodyRock(
-        new PositionCoordinat(position.getX(), position.getY())
+        new PositionCoordinat(position.getX(), position.getY()),
+        i + 1
       );
       newTail.unshift(newRock);
     }
 
     const firstRockTail: typeof Rock = new SnackBodyRock(
-      new PositionCoordinat(headPosition.getX(), headPosition.getY())
+      new PositionCoordinat(headPosition.getX(), headPosition.getY()),
+      1
     );
     newTail.unshift(firstRockTail);
     this.tail = newTail;
-    console.log(this.tail);
   }
 
   render(): HTMLElement | HTMLElement[] | null {
