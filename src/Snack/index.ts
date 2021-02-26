@@ -30,14 +30,14 @@ module.exports = class Snack implements UI {
     this.tail = [
       new SnackBodyRock(
         new PositionCoordinat(
-          this.head.getPosition().getX() - 1,
+          this.head.getPosition().getX() - 12,
           this.head.getPosition().getY()
         ),
         1
       ),
       new SnackBodyRock(
         new PositionCoordinat(
-          this.head.getPosition().getX() - 2,
+          this.head.getPosition().getX() - 24,
           this.head.getPosition().getY()
         ),
         2
