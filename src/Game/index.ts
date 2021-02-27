@@ -1,8 +1,15 @@
 const Field = require("../Field/index.ts");
 const Snack = require("../Snack/index.ts");
+const Rock = require("../Rock/index.ts");
+const FoodRock = require("../FoodRock/index.ts");
+const PositionCoordinat = require("../PositionCoordinat/index.ts");
 import { UI } from "../Interface/UI";
 
-const GameUI = (field: HTMLElement, snack: HTMLElement[]): HTMLElement => {
+const GameUI = (
+  field: HTMLElement,
+  snack: HTMLElement[],
+  foodRock: HTMLElement
+): HTMLElement => {
   let GameDiv: HTMLElement = document.getElementById("game-container");
   if (!GameDiv) {
     GameDiv = document.createElement("div");
@@ -17,6 +24,7 @@ const GameUI = (field: HTMLElement, snack: HTMLElement[]): HTMLElement => {
     fieldContainer.remove();
   }
 
+  field.append(foodRock);
   snack.forEach((rock: HTMLElement) => {
     field.append(rock);
   });
@@ -30,12 +38,14 @@ module.exports = class Game implements UI {
   private score: number;
   public snack: typeof Snack;
   private field: typeof Field;
+  private snackFood: typeof Rock;
 
   constructor() {
     this.snack = new Snack();
     this.score = 0;
     this.gameOver = false;
-    this.field = new Field(300, 350);
+    this.field = new Field(300, 348);
+    this.generateSnackFood();
   }
 
   getGameOver(): boolean {
@@ -58,8 +68,23 @@ module.exports = class Game implements UI {
     this.score = score;
   }
 
+  // 12 is the width and height of rocks include (snackBodyRock , snackFood rock).
+  // it is explicitly defined. in the rock class.
+  generateSnackFood(): void {
+    // 25 is the number of fields columns based on snack's rock width;
+    const x: number = Math.floor(Math.random() * 25) * 12;
+    // 30 is the number of fields rows based on snack's rock height;
+    const y: number = Math.floor(Math.random() * 30) * 12;
+    // generate snack food position on the field.
+    this.snackFood = new FoodRock(new PositionCoordinat(x, y));
+  }
+
   render(): HTMLElement | HTMLElement[] | null {
-    return GameUI(this.field.render(), this.snack.render());
+    return GameUI(
+      this.field.render(),
+      this.snack.render(),
+      this.snackFood.render()
+    );
   }
 };
 
