@@ -91,6 +91,22 @@ module.exports = class Game implements UI {
     }
   }
 
+  getOutOfBoundries(): boolean {
+    const headPosition: typeof PositionCoordinat = this.snack.head.getPosition();
+
+    if (
+      headPosition.getX() < 0 ||
+      headPosition.getX() >= this.field.getWidth() ||
+      headPosition.getY() < 0 ||
+      headPosition.getY() >= this.field.getHeight()
+    ) {
+      // display a pop up GAME OVER.
+      return true;
+    }
+
+    return false;
+  }
+
   render(): HTMLElement | HTMLElement[] | null {
     return GameUI(
       this.field.render(),
