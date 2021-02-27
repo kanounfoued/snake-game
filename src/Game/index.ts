@@ -4,6 +4,7 @@ const Rock = require("../Rock/index.ts");
 const FoodRock = require("../FoodRock/index.ts");
 const PositionCoordinat = require("../PositionCoordinat/index.ts");
 import { UI } from "../Interface/UI";
+const Utils = require("../Utils/index.ts");
 
 const GameUI = (
   field: HTMLElement,
@@ -17,12 +18,9 @@ const GameUI = (
     GameDiv.setAttribute("class", "game-container");
   }
 
-  if (document.getElementById("game-container")) {
-    const fieldContainer: HTMLElement = document.getElementById(
-      "field-container"
-    );
-    fieldContainer.remove();
-  }
+  // remove here the snack's rocks instead of the whole field.
+  Utils.removeNode("field-container");
+  // remove here the snack's rocks instead of the whole field.
 
   field.append(foodRock);
   snack.forEach((rock: HTMLElement) => {
@@ -77,6 +75,36 @@ module.exports = class Game implements UI {
     const y: number = Math.floor(Math.random() * 30) * 12;
     // generate snack food position on the field.
     this.snackFood = new FoodRock(new PositionCoordinat(x, y));
+  }
+
+  foodShouldBeEaten(): void {
+    if (
+      this.snackFood.getPosition().getX() ===
+        this.snack.head.getPosition().getX() &&
+      this.snackFood.getPosition().getY() ===
+        this.snack.head.getPosition().getY()
+    ) {
+      const FoodDiv: HTMLElement = document.getElementById("food-rock");
+      FoodDiv.remove();
+      this.snack.eatFoodRock(this.snackFood);
+      this.generateSnackFood();
+    }
+  }
+
+  getOutOfBoundries(): boolean {
+    const headPosition: typeof PositionCoordinat = this.snack.head.getPosition();
+
+    if (
+      headPosition.getX() < 0 ||
+      headPosition.getX() >= this.field.getWidth() ||
+      headPosition.getY() < 0 ||
+      headPosition.getY() >= this.field.getHeight()
+    ) {
+      // display a pop up GAME OVER.
+      return true;
+    }
+
+    return false;
   }
 
   render(): HTMLElement | HTMLElement[] | null {

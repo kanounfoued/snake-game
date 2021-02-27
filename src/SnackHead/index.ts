@@ -27,21 +27,25 @@ module.exports = class SnackHead extends Rock implements MoveToDirection, UI {
   moveLeft(): void {
     const x = this.position.getX();
     this.position.setX(x - 12);
+    this.direction = Direction.LEFT;
   }
 
   moveRight(): void {
     const x = this.position.getX();
     this.position.setX(x + 12);
+    this.direction = Direction.RIGHT;
   }
 
   moveUp(): void {
     const y = this.position.getY();
     this.position.setY(y - 12);
+    this.direction = Direction.UP;
   }
 
   moveDown(): void {
     const y = this.position.getY();
     this.position.setY(y + 12);
+    this.direction = Direction.DOWN;
   }
 
   render(): HTMLElement | HTMLElement[] | null {

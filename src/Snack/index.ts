@@ -5,6 +5,13 @@ const SnackBodyRock = require("../SnackBodyRock/index.ts");
 import { Direction } from "../Enum/Direction";
 import { UI } from "../Interface/UI";
 
+const OPPOSITE_DIRECTION = {
+  0: 1, // LEFT: RIGHT
+  1: 0, // RIGHT: LEFT
+  2: 3, // TOP: DOWN
+  3: 2, // DOWN: TOP
+};
+
 const SnackUI = (
   head: typeof SnackHead,
   tail: typeof Rock[]
@@ -47,6 +54,9 @@ module.exports = class Snack implements UI {
   }
 
   moveTo(directionCode: Direction): void {
+    // do anything if the direction is the opposite of the current direction.
+    if (OPPOSITE_DIRECTION[this.head.getDirection()] === directionCode) return;
+
     this.moveTail(this.head.getPosition());
     if (directionCode === 0) this.head.moveLeft();
     if (directionCode === 1) this.head.moveRight();
@@ -75,7 +85,12 @@ module.exports = class Snack implements UI {
 
   eatFoodRock(foodRock: typeof Rock): void {
     this.tail.push(this.head);
-    this.head = foodRock;
+    this.head = new SnackHead(
+      new PositionCoordinat(
+        foodRock.getPosition().getX(),
+        foodRock.getPosition().getY()
+      )
+    );
   }
 
   render(): HTMLElement | HTMLElement[] | null {

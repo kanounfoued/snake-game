@@ -21,6 +21,7 @@ module.exports = class Field implements UI {
   getHeight(): number {
     return this.height;
   }
+
   getWidth(): number {
     return this.width;
   }
