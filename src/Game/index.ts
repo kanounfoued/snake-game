@@ -73,6 +73,13 @@ module.exports = class Game implements UI {
     const x: number = Math.floor(Math.random() * 25) * 12;
     // 30 is the number of fields rows based on snack's rock height;
     const y: number = Math.floor(Math.random() * 30) * 12;
+
+    const food: typeof Rock = new FoodRock(new PositionCoordinat(x, y));
+    if (this.snack.checkNodePositionWithTail(food)) {
+      this.generateSnackFood();
+      return;
+    }
+
     // generate snack food position on the field.
     this.snackFood = new FoodRock(new PositionCoordinat(x, y));
   }
@@ -84,8 +91,7 @@ module.exports = class Game implements UI {
       this.snackFood.getPosition().getY() ===
         this.snack.head.getPosition().getY()
     ) {
-      const FoodDiv: HTMLElement = document.getElementById("food-rock");
-      FoodDiv.remove();
+      Utils.removeNode("food-rock");
       this.snack.eatFoodRock(this.snackFood);
       this.generateSnackFood();
     }

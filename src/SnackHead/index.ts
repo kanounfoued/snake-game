@@ -15,9 +15,9 @@ const SnackHeadUI = (x: number, y: number): HTMLElement => {
 module.exports = class SnackHead extends Rock implements MoveToDirection, UI {
   private direction: Direction;
 
-  constructor(position: typeof PositionCoordinat) {
+  constructor(position: typeof PositionCoordinat, direction: Direction) {
     super(position);
-    this.direction = Direction.RIGHT;
+    this.direction = direction;
   }
 
   getDirection(): Direction {
