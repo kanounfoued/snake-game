@@ -62,6 +62,10 @@ module.exports = class Snack implements UI {
     if (directionCode === 1) this.head.moveRight();
     if (directionCode === 2) this.head.moveUp();
     if (directionCode === 3) this.head.moveDown();
+
+    if (this.checkHeadPositionWithTail()) {
+      console.log("GAME OVER");
+    }
   }
 
   moveTail(headPosition: typeof PositionCoordinat): void {
@@ -81,6 +85,19 @@ module.exports = class Snack implements UI {
     );
     newTail.unshift(firstRockTail);
     this.tail = newTail;
+  }
+
+  private checkHeadPositionWithTail(): boolean {
+    for (let i = 0; i < this.tail.length; i++) {
+      if (
+        this.tail[i].getPosition().getX() === this.head.getPosition().getX() &&
+        this.tail[i].getPosition().getY() === this.head.getPosition().getY()
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   eatFoodRock(foodRock: typeof Rock): void {
