@@ -2,7 +2,7 @@ const Rock = require("../Rock/index.ts");
 const SnackHead = require("../SnackHead/index.ts");
 const PositionCoordinat = require("../PositionCoordinat/index.ts");
 const SnackBodyRock = require("../SnackBodyRock/index.ts");
-import { Direction } from "../Enum/Direction";
+import { Direction } from "../Enum/Direction/index.ts";
 import { UI } from "../Interface/UI";
 
 const OPPOSITE_DIRECTION = {
@@ -12,10 +12,7 @@ const OPPOSITE_DIRECTION = {
   3: 2, // DOWN: TOP
 };
 
-const SnackUI = (
-  head: typeof SnackHead,
-  tail: typeof Rock[]
-): HTMLElement[] => {
+const SnackUI = (head: typeof Rock, tail: typeof Rock[]): HTMLElement[] => {
   const SnackHeadDiv: HTMLElement = head.render();
   const list: HTMLElement[] = [];
   list.push(SnackHeadDiv);
@@ -29,14 +26,17 @@ const SnackUI = (
 };
 
 module.exports = class Snack implements UI {
-  public head: typeof SnackHead;
+  public head: typeof Rock;
   private tail: typeof Rock[];
 
   constructor() {
     // 13 is the position number of the column in which the snack's head should be point to.
     // it is defined explicitly.
     // 12 is the width of rock.
-    this.head = new SnackHead(new PositionCoordinat(13 * 12, 13 * 12));
+    this.head = new SnackHead(
+      new PositionCoordinat(13 * 12, 13 * 12),
+      Direction.RIGHT
+    );
     this.tail = [
       new SnackBodyRock(
         new PositionCoordinat(
@@ -56,14 +56,13 @@ module.exports = class Snack implements UI {
   moveTo(directionCode: Direction): void {
     // do anything if the direction is the opposite of the current direction.
     if (OPPOSITE_DIRECTION[this.head.getDirection()] === directionCode) return;
-
     this.moveTail(this.head.getPosition());
     if (directionCode === 0) this.head.moveLeft();
     if (directionCode === 1) this.head.moveRight();
     if (directionCode === 2) this.head.moveUp();
     if (directionCode === 3) this.head.moveDown();
 
-    if (this.checkHeadPositionWithTail()) {
+    if (this.checkNodePositionWithTail(this.head)) {
       console.log("GAME OVER");
     }
   }
@@ -87,11 +86,11 @@ module.exports = class Snack implements UI {
     this.tail = newTail;
   }
 
-  private checkHeadPositionWithTail(): boolean {
+  checkNodePositionWithTail(node: typeof Rock): boolean {
     for (let i = 0; i < this.tail.length; i++) {
       if (
-        this.tail[i].getPosition().getX() === this.head.getPosition().getX() &&
-        this.tail[i].getPosition().getY() === this.head.getPosition().getY()
+        this.tail[i].getPosition().getX() === node.getPosition().getX() &&
+        this.tail[i].getPosition().getY() === node.getPosition().getY()
       ) {
         return true;
       }
@@ -101,12 +100,14 @@ module.exports = class Snack implements UI {
   }
 
   eatFoodRock(foodRock: typeof Rock): void {
+    const direction: Direction = this.head.getDirection();
     this.tail.push(this.head);
     this.head = new SnackHead(
       new PositionCoordinat(
         foodRock.getPosition().getX(),
         foodRock.getPosition().getY()
-      )
+      ),
+      direction
     );
   }
 
