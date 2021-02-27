@@ -26,21 +26,22 @@ module.exports = class Snack implements UI {
   private tail: typeof Rock[];
 
   constructor() {
-    this.head = new SnackHead(new PositionCoordinat(50, 50));
+    // 13 is the position number of the column in which the snack's head should be point to.
+    // it is defined explicitly.
+    // 12 is the width of rock.
+    this.head = new SnackHead(new PositionCoordinat(13 * 12, 13 * 12));
     this.tail = [
       new SnackBodyRock(
         new PositionCoordinat(
           this.head.getPosition().getX() - 12,
           this.head.getPosition().getY()
-        ),
-        1
+        )
       ),
       new SnackBodyRock(
         new PositionCoordinat(
           this.head.getPosition().getX() - 24,
           this.head.getPosition().getY()
-        ),
-        2
+        )
       ),
     ];
   }
@@ -60,18 +61,21 @@ module.exports = class Snack implements UI {
     for (let i = lastPosition; i > 0; i--) {
       const position = this.tail[i - 1].getPosition();
       const newRock: typeof Rock = new SnackBodyRock(
-        new PositionCoordinat(position.getX(), position.getY()),
-        i + 1
+        new PositionCoordinat(position.getX(), position.getY())
       );
       newTail.unshift(newRock);
     }
 
     const firstRockTail: typeof Rock = new SnackBodyRock(
-      new PositionCoordinat(headPosition.getX(), headPosition.getY()),
-      1
+      new PositionCoordinat(headPosition.getX(), headPosition.getY())
     );
     newTail.unshift(firstRockTail);
     this.tail = newTail;
+  }
+
+  eatFoodRock(foodRock: typeof Rock): void {
+    this.tail.push(this.head);
+    this.head = foodRock;
   }
 
   render(): HTMLElement | HTMLElement[] | null {
