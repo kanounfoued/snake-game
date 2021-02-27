@@ -5,6 +5,7 @@ import { UI } from "../Interface/UI";
 const FoodRockUI = (x: number, y: number): HTMLElement => {
   const FoodDiv = document.createElement("div");
   FoodDiv.setAttribute("class", "rock food-rock");
+  FoodDiv.setAttribute("id", "food-rock");
   FoodDiv.style.left = x + "px";
   FoodDiv.style.top = y + "px";
   return FoodDiv;

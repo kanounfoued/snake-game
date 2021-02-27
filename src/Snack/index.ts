@@ -75,7 +75,12 @@ module.exports = class Snack implements UI {
 
   eatFoodRock(foodRock: typeof Rock): void {
     this.tail.push(this.head);
-    this.head = foodRock;
+    this.head = new SnackHead(
+      new PositionCoordinat(
+        foodRock.getPosition().getX(),
+        foodRock.getPosition().getY()
+      )
+    );
   }
 
   render(): HTMLElement | HTMLElement[] | null {

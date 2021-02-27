@@ -17,18 +17,22 @@ const buttonTop = document.getElementById("top");
 
 buttonRight.onclick = () => {
   game.snack.moveTo(1);
+  game.foodShouldBeEaten();
   game.render();
 };
 buttonLeft.onclick = () => {
   game.snack.moveTo(0);
+  game.foodShouldBeEaten();
   game.render();
 };
 buttonBottom.onclick = () => {
   game.snack.moveTo(3);
+  game.foodShouldBeEaten();
   game.render();
 };
 buttonTop.onclick = () => {
   game.snack.moveTo(2);
+  game.foodShouldBeEaten();
   game.render();
 };
 
