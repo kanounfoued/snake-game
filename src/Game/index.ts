@@ -18,9 +18,7 @@ const GameUI = (
     GameDiv.setAttribute("class", "game-container");
   }
 
-  // remove here the snack's rocks instead of the whole field.
   Utils.removeNode("field-container");
-  // remove here the snack's rocks instead of the whole field.
 
   field.append(foodRock);
   snack.forEach((rock: HTMLElement) => {
