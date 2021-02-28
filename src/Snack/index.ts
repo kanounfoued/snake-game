@@ -54,8 +54,12 @@ module.exports = class Snack implements UI {
   }
 
   moveTo(directionCode: Direction): void {
-    // do anything if the direction is the opposite of the current direction.
-    if (OPPOSITE_DIRECTION[this.head.getDirection()] === directionCode) return;
+    // do anything if the direction is the opposite/same as the current direction.
+    if (
+      OPPOSITE_DIRECTION[this.head.getDirection()] === directionCode ||
+      this.head.getDirection() === directionCode
+    )
+      return;
     this.moveTail(this.head.getPosition());
     if (directionCode === 0) this.head.moveLeft();
     if (directionCode === 1) this.head.moveRight();
