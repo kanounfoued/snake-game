@@ -5,47 +5,56 @@ const game = new Game();
 
 rootDiv.append(game.render());
 
-// setInterval(() => {
-//   game.snack.moveTo(2);
-//   game.render();
-// }, 50);
+let timer = null;
 
-const buttonRight = document.getElementById("right");
-const buttonLeft = document.getElementById("left");
-const buttonBottom = document.getElementById("bottom");
-const buttonTop = document.getElementById("top");
+document.onkeyup = (e: KeyboardEvent) => {
+  clearInterval(timer);
+  if (e.keyCode === 37) {
+    game.snack.moveTo(0);
+  } else if (e.keyCode === 39) {
+    game.snack.moveTo(1);
+  } else if (e.keyCode === 38) {
+    game.snack.moveTo(2);
+  } else if (e.keyCode === 40) {
+    game.snack.moveTo(3);
+  }
 
-buttonRight.onclick = () => {
-  game.snack.moveTo(1);
   if (game.getOutOfBoundries()) {
     console.log("GAME OVER");
   }
+
   game.foodShouldBeEaten();
   game.render();
+  timer = setInterval(() => {
+    game.snack.moveTo(game.snack.head.getDirection());
+    game.render();
+  }, 200);
 };
-buttonLeft.onclick = () => {
-  game.snack.moveTo(0);
+
+document.onkeyup = (e: KeyboardEvent) => {
+  // clearInterval(timer);
+  if (e.keyCode === 37) {
+    game.snack.moveTo(0);
+  } else if (e.keyCode === 39) {
+    game.snack.moveTo(1);
+  } else if (e.keyCode === 38) {
+    game.snack.moveTo(2);
+  } else if (e.keyCode === 40) {
+    game.snack.moveTo(3);
+  }
+
   if (game.getOutOfBoundries()) {
     console.log("GAME OVER");
   }
+
   game.foodShouldBeEaten();
   game.render();
 };
-buttonBottom.onclick = () => {
-  game.snack.moveTo(3);
-  if (game.getOutOfBoundries()) {
-    console.log("GAME OVER");
-  }
+
+timer = setInterval(() => {
+  game.snack.moveTo(game.snack.head.getDirection());
   game.foodShouldBeEaten();
   game.render();
-};
-buttonTop.onclick = () => {
-  game.snack.moveTo(2);
-  if (game.getOutOfBoundries()) {
-    console.log("GAME OVER");
-  }
-  game.foodShouldBeEaten();
-  game.render();
-};
+}, 200);
 
 export {};
